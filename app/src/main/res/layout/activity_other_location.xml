@@ -22,7 +22,7 @@
         android:text="Enter the co-ordinates of the desired location"
         android:textSize="30sp"
         android:layout_below="@+id/heading"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:gravity="center"
         android:id="@+id/textView1"
         />
@@ -33,6 +33,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginHorizontal="15dp"
         android:hint="Enter Latitude"
+        android:inputType="numberDecimal"
         android:textSize="25sp"
         android:id="@+id/EditText_latitude"
         />
@@ -44,6 +45,7 @@
         android:layout_marginHorizontal="15dp"
         android:hint="Enter Longitude"
         android:textSize="25sp"
+        android:inputType="numberDecimal"
         android:id="@+id/EditText_longitude"
         />
     <Button
