@@ -24,7 +24,11 @@ public class MainActivity extends AppCompatActivity {
         CurrentLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Fetching Current Location....", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Fetching Current Location....", Toast.LENGTH_SHORT).show();
+                Intent Currentintent = new Intent(MainActivity.this, GetCurrentLocation.class);
+                Currentintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(Currentintent);
+                finish();
             }
         });
 
