@@ -2,6 +2,7 @@ package com.example.adrdeweatherapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -50,6 +51,11 @@ public class OtherLocation extends AppCompatActivity {
 
         else {
             Toast.makeText(this, "Fetching data. Please wait for a while.", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(OtherLocation.this, WeatherUpdates.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
         }
     }
 }
