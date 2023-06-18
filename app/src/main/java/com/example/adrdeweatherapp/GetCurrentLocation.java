@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -20,8 +21,6 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-import org.w3c.dom.Text;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -29,8 +28,10 @@ import java.util.Locale;
 public class GetCurrentLocation extends AppCompatActivity {
 
     FusedLocationProviderClient fusedLocationProviderClient;
-    TextView address, city, country, latitude, longitude;
-    Button getLocation;
+    TextView address, city, country, textViewLatitude, textViewLongitude;
+    Button getLocation, getForecast;
+    boolean locationAvailable;
+    String currentLatitude,currentLongitude;
 
     private final static  int REQUEST_CODE = 100;
 
@@ -43,8 +44,10 @@ public class GetCurrentLocation extends AppCompatActivity {
         address = findViewById(R.id.addressView);
         country = findViewById(R.id.country);
         getLocation = findViewById(R.id.get_location_btn);
-        latitude = findViewById(R.id.latitude);
-        longitude = findViewById(R.id.longitude);
+        textViewLatitude = findViewById(R.id.latitude);
+        textViewLongitude = findViewById(R.id.longitude);
+        getForecast = findViewById(R.id.forecast_btn);
+        locationAvailable = false;
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -54,6 +57,31 @@ public class GetCurrentLocation extends AppCompatActivity {
                 getLastLocation();
             }
         });
+
+
+            getForecast.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Toast.makeText(GetCurrentLocation.this, "Fetching data. Please wait for a while.", Toast.LENGTH_SHORT).show();
+
+                    if (locationAvailable)
+                    {
+                    Intent weatherIntent = new Intent(GetCurrentLocation.this, WeatherUpdates.class);
+                    weatherIntent.putExtra("Latitude", currentLatitude);
+                    weatherIntent.putExtra("Longitude", currentLongitude);
+                    weatherIntent.putExtra("LocationType", 1);
+                    weatherIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(weatherIntent);
+                    finish();
+                    }
+                    else
+                    {
+                       Toast.makeText(GetCurrentLocation.this, "Weather forecast will be provided after fetching current location successfully.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
     }
 
     private void getLastLocation() {
@@ -67,12 +95,14 @@ public class GetCurrentLocation extends AppCompatActivity {
                         List<Address> addresses = null;
                         try {
                             addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(),1);
-
-                            latitude.setText("Latitude : " +addresses.get(0).getLatitude());
-                            longitude.setText("Longitude : " +addresses.get(0).getLongitude());
+                            currentLatitude = String.valueOf(addresses.get(0).getLatitude());
+                            currentLongitude = String.valueOf(addresses.get(0).getLongitude());
+                            textViewLatitude.setText("Latitude : " +addresses.get(0).getLatitude());
+                            textViewLongitude.setText("Longitude : " +addresses.get(0).getLongitude());
                             address.setText("Address : " +addresses.get(0).getAddressLine(0));
                             city.setText("City : " +addresses.get(0).getLocality());
                             country.setText("Country : " +addresses.get(0).getCountryName());
+                            locationAvailable = true;
 
                         } catch (IOException e) {
                             throw new RuntimeException(e);

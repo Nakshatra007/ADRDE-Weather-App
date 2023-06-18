@@ -16,6 +16,7 @@ public class OtherLocation extends AppCompatActivity {
     private EditText longitudeEditText;
     private Button doneButton;
 
+    public String latitude, longitude;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +30,8 @@ public class OtherLocation extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String latitude = latitudeEditText.getText().toString();
-                String longitude = longitudeEditText.getText().toString();
+              latitude = latitudeEditText.getText().toString();
+              longitude = longitudeEditText.getText().toString();
 
                 FetchData(latitude, longitude);
             }
@@ -52,9 +53,12 @@ public class OtherLocation extends AppCompatActivity {
         else {
             Toast.makeText(this, "Fetching data. Please wait for a while.", Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(OtherLocation.this, WeatherUpdates.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+            Intent weatherIntent = new Intent(OtherLocation.this, WeatherUpdates.class);
+            weatherIntent.putExtra("Latitude", latitude);
+            weatherIntent.putExtra("Longitude", longitude);
+            weatherIntent.putExtra("LocationType", 2);
+            weatherIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(weatherIntent);
             finish();
         }
     }

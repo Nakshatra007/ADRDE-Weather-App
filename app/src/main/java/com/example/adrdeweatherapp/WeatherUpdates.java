@@ -2,8 +2,10 @@ package com.example.adrdeweatherapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -33,6 +35,12 @@ public class WeatherUpdates extends AppCompatActivity {
 
     private TextView weatherData;
 
+    private TextView textViewLatitude;
+
+    private TextView textViewLongitude;
+
+    String latitude1, longitude1;
+
     private static String data ="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,26 +49,53 @@ public class WeatherUpdates extends AppCompatActivity {
 
         weatherData = findViewById(R.id.weather_data);
 
+        textViewLatitude = findViewById(R.id.textView_latitude);
+
+        textViewLongitude = findViewById(R.id.textView_longitude);
+
         RequestQueue queue = Volley.newRequestQueue(WeatherUpdates.this);
 
 
+
+        Intent intent = getIntent();
+        //if(intent.getStringExtra("LocationType") == 2) {
+            String latitude1 = intent.getStringExtra("Latitude");
+            String longitude1 = intent.getStringExtra("Longitude");
+
+            textViewLatitude.setText("Latitude: " + latitude1);
+            textViewLongitude.setText("Longitude: " + longitude1);
+//        }
         String url = API_URL;
 
         JSONObject requestParams = new JSONObject();
         try {
-            requestParams.put("lat", 49.809);
-            requestParams.put("lon", 16.787);
+            requestParams.put("lat", latitude1);
+            requestParams.put("lon", longitude1);
             requestParams.put("model", "gfs");
             JSONArray array = new JSONArray();
             array.put("wind");
+            array.put("temp");
             array.put("dewpoint");
             array.put("rh");
             array.put("pressure");
+            array.put("ptype");
             requestParams.put("parameters", array);
             JSONArray array1 = new JSONArray();
             array1.put("surface");
+            array1.put("1000h");
+            array1.put("950h");
+            array1.put("925h");
+            array1.put("900h");
+            array1.put("850h");
             array1.put("800h");
+            array1.put("700h");
+            array1.put("600h");
+            array1.put("500h");
+            array1.put("400h");
             array1.put("300h");
+          //array1.put("250h");
+            array1.put("200h");
+            array1.put("150h");
             requestParams.put("levels", array1);
             requestParams.put("key", API_KEY);
 
@@ -91,8 +126,9 @@ public class WeatherUpdates extends AppCompatActivity {
                                     String parameterLevel = unitKeys.next();
                                     String unitValue = units.getString(parameterLevel);
 
-                                    double value1 = (double) response.getJSONArray(parameterLevel).get(i);
+                                    double value1 = (double) response.getJSONArray(parameterLevel).getDouble(i);
                                     double value = Double.parseDouble(decfor.format(value1));
+                                    //String value = response.getJSONArray(parameterLevel).get(i).toString();
                                     data = data + parameterLevel + ":   "+ value + " " + unitValue +"\n";
                                 }
                                     data = data +"-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-"+"\n\n\n";

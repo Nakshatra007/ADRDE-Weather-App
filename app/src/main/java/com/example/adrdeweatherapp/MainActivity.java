@@ -10,18 +10,18 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button CurrentLocationButton;
-    private Button OtherLocationButton;
+    private Button currentLocationButton;
+    private Button otherLocationButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        CurrentLocationButton = findViewById(R.id.button_current_location);
-        OtherLocationButton = findViewById(R.id.button_manual_location);
+        currentLocationButton = findViewById(R.id.button_current_location);
+        otherLocationButton = findViewById(R.id.button_manual_location);
 
-        CurrentLocationButton.setOnClickListener(new View.OnClickListener() {
+        currentLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Toast.makeText(MainActivity.this, "Fetching Current Location....", Toast.LENGTH_SHORT).show();
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        OtherLocationButton.setOnClickListener(new View.OnClickListener() {
+        otherLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, OtherLocation.class);
