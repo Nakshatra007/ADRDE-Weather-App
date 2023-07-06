@@ -1,5 +1,7 @@
 package com.example.adrdeweatherapp;
 
+import static java.lang.Math.round;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -32,6 +34,7 @@ public class GetCurrentLocation extends AppCompatActivity {
     Button getLocation, getForecast;
     boolean locationAvailable;
     String currentLatitude,currentLongitude;
+
 
     private final static  int REQUEST_CODE = 100;
 
@@ -95,10 +98,11 @@ public class GetCurrentLocation extends AppCompatActivity {
                         List<Address> addresses = null;
                         try {
                             addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(),1);
-                            currentLatitude = String.valueOf(addresses.get(0).getLatitude());
-                            currentLongitude = String.valueOf(addresses.get(0).getLongitude());
-                            textViewLatitude.setText("Latitude : " +addresses.get(0).getLatitude());
-                            textViewLongitude.setText("Longitude : " +addresses.get(0).getLongitude());
+
+                            currentLatitude = String.valueOf(round(addresses.get(0).getLatitude()*100.00)/100.00);
+                            currentLongitude = String.valueOf(round(addresses.get(0).getLongitude()*100.00)/100.00);
+                            textViewLatitude.setText("Latitude : " +currentLatitude);
+                            textViewLongitude.setText("Longitude : " +currentLongitude);
                             address.setText("Address : " +addresses.get(0).getAddressLine(0));
                             city.setText("City : " +addresses.get(0).getLocality());
                             country.setText("Country : " +addresses.get(0).getCountryName());

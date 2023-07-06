@@ -21,13 +21,21 @@ public class MainActivity extends AppCompatActivity {
         currentLocationButton = findViewById(R.id.button_current_location);
         otherLocationButton = findViewById(R.id.button_manual_location);
 
+
+
+        /*Intent currentIntent = new Intent(MainActivity.this, SQLData.class);
+        currentIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(currentIntent);
+        finish();*/
+
+
         currentLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Toast.makeText(MainActivity.this, "Fetching Current Location....", Toast.LENGTH_SHORT).show();
-                Intent Currentintent = new Intent(MainActivity.this, GetCurrentLocation.class);
-                Currentintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(Currentintent);
+                Intent currentIntent = new Intent(MainActivity.this, GetCurrentLocation.class);
+                currentIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(currentIntent);
                 finish();
             }
         });

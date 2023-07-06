@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".WeatherUpdates">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <LinearLayout
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:context=".WeatherUpdates"
         android:orientation="vertical">
 
         <TextView
@@ -41,9 +33,9 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginVertical="20dp"
             android:layout_marginBottom="20dp"
-            android:text="Loading Data"
-            android:textSize="30sp" />
+            android:text="Downloading data........\nPlease wait for a while."
+            android:textSize="20sp"
+            android:layout_gravity="center_horizontal"
+            />
 
-    </LinearLayout>
-    </ScrollView>
-</RelativeLayout>
+</LinearLayout>
